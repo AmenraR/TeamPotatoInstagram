@@ -98,7 +98,22 @@ public class PictureFragment extends OAuthFragment{
         textView= (TextView)fragmentView.findViewById(R.id.textView);
 
         //get ids within XML layout and save in variable; imageView
-        imageView= (ImageView)fragmentView.findViewById(R.id.image1);
+        imageView= (ImageView)fragmentView.findViewById(R.id.image1).setOnClickListener();
+
+        //create an OAuthParameter
+        OAuthParameters oauthParameters= new OAuthParameters();
+
+        //add a parameter
+        oauthParameters.addParameter("access_token", getOAuthConnection().accessToken);
+
+        //build a url
+        String url= UrlBuilder.buildUrlWithParameters(getOAuthConnection().getApiUrl()+ "media-id/likes",oauthParameters);
+
+        //set url for an api call
+        setUrlForApiCall(url);
+
+        //get a request for task
+        new GetRequestTask().execute(this);
 
         //get ids within XML layout and save in variable; imageView2
         imageView2= (ImageView)fragmentView.findViewById(R.id.image2);
